@@ -33,6 +33,9 @@ angular.module("socially").controller("PartiesListCtrl", ['$scope', '$meteor', '
             latitude: 45,
             longitude: -73
           },
+          options : {
+            maxZoom : 10
+          },
           zoom: 8
         };
       });
