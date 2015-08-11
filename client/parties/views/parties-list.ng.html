@@ -1,9 +1,86 @@
-<md-content flex layout="row">
-    <div layout="row" flex>
-        <div flex="50">
+<md-content flex-gt-sm layout-gt-sm="row">
+    <div layout-gt-sm="row" flex-gt-sm>
+        <div flex-gt-sm="50" flex-sm>
+            <div>
+                <div layout-padding layout="row">
+                    <md-input-container style="width:50%">
+                        <label>Search</label>
+                        <input type="text" ng-model="search"/>
+                    </md-input-container>
+                    <md-select ng-model="orderProperty" placeholder="Sort Order" >
+                        <md-option value="1">Ascending</md-option>
+                        <md-option value="-1">Descending</md-option>
+                    </md-select>
+                </div>
+            </div>
+            <md-content class="md-padding" style="padding-top:0;">
+                <div  dir-paginate="party in parties | itemsPerPage: perPage" total-items="partiesCount.count">
+                    <md-card>
+                        <md-card-content>
+                            <h2 class="md-title" style=""><a href="/parties/{{party._id}}">{{party.name}}</a></h2>
+                            <p style="padding:0 10px;margin-bottom:35px;margin-top: 6px;">{{party.description}}</p>
+
+
+                            <div layout="row">
+                                <div flex="1">
+                                    <p style="margin-top:0px;margin-bottom:3px;font-size:14px;color:#aaa;">
+                                        <small>Posted by {{ creator(party) | displayName }}</small>
+                                        <span ng-if="party.public" style="font-size:12px;color:#999;">| Everyone is invited</span>
+                                    </p>
+
+                                    <div ng-show="$root.currentUser" class="md-actions" layout="row">
+                                        <md-button ng-click="rsvp(party._id, 'yes')">I'm going!</md-button>
+                                        <md-button ng-click="rsvp(party._id, 'maybe')">Maybe</md-button>
+                                        <md-button ng-click="rsvp(party._id, 'no')">No</md-button>
+                                    </div>
+                                </div>
+                                <div  layout="row" layout-align="end end">
+                                    <div ng-hide="$root.currentUser" style="font-size:13px;margin-bottom:10px;">
+                                        Sign in to RSVP for this party
+                                    </div>
+                                    <div>
+                                        <div class="rsvps-sum">
+                                            <div class="rsvps-amount">{{ (party.rsvps | filter:{rsvp:'yes'}).length }}</div>
+                                            <div class="rsvps-title">Yes</div>
+                                        </div>
+                                        <div class="rsvps-sum">
+                                            <div class="rsvps-amount">{{ (party.rsvps | filter:{rsvp:'maybe'}).length }}</div>
+                                            <div class="rsvps-title">Maybe</div>
+                                        </div>
+                                        <div class="rsvps-sum">
+                                            <div class="rsvps-amount">{{ (party.rsvps | filter:{rsvp:'no'}).length }}</div>
+                                            <div class="rsvps-title">No</div>
+                                        </div>
+                                        <!--<div ng-repeat="rsvp in party.rsvps | filter:{rsvp:'yes'}">-->
+                                            <!--{{ getUserById(rsvp.user) | displayName }} - {{ rsvp.rsvp }}-->
+                                        <!--</div>-->
+                                        <!--<div ng-repeat="rsvp in party.rsvps | filter:{rsvp:'maybe'}">-->
+                                            <!--{{ getUserById(rsvp.user) | displayName }} - {{ rsvp.rsvp }}-->
+                                        <!--</div>-->
+                                        <!--<div ng-repeat="rsvp in party.rsvps | filter:{rsvp:'no'}">-->
+                                            <!--{{ getUserById(rsvp.user) | displayName }} - {{ rsvp.rsvp }}-->
+                                        <!--</div>-->
+                                    </div>
+                                    <!--<md-list ng-if="!party.public">-->
+                                        <!--Users who haven't responded:-->
+                                        <!--<md-list-item ng-repeat="invitedUser in outstandingInvitations(party)">-->
+                                            <!--{{ invitedUser | displayName }}-->
+                                        <!--</md-list-item>-->
+                                    <!--</md-list>-->
+
+
+                                </div>
+                            </div>
+
+
+                        </md-card-content>
+
+                    </md-card>
+                </div>
+            </md-content>
 
         </div>
-        <div flex="50" layout="row">
+        <div flex-gt-sm="50" flex-sm layout="row" style="min-height:300px;">
             <ui-gmap-google-map options="map.options" center="map.center" zoom="map.zoom" flex layout="row">
                 <ui-gmap-markers models="parties" coords="'location'" click="onClicked()"
                                  fit="true" idkey="'_id'" doRebuildAll="true">
