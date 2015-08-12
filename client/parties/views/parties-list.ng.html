@@ -11,6 +11,14 @@
                         <md-option value="1">Ascending</md-option>
                         <md-option value="-1">Descending</md-option>
                     </md-select>
+                    <md-button class="md-fab" aria-label="Eat cake" ng-click="openAddNewPartyModal()">
+                        <!--<i class="material-icons">face</i>-->
+                        <!--<md-icon> face </md-icon>-->
+                        <md-icon md-font-set="material-icons"> add </md-icon>
+                        <!--<md-icon> #xE87C; </md-icon>-->
+
+
+                    </md-button>
                 </div>
             </div>
             <md-content class="md-padding" style="padding-top:0;">
@@ -40,15 +48,15 @@
                                     </div>
                                     <div>
                                         <div class="rsvps-sum">
-                                            <div class="rsvps-amount">{{ (party.rsvps | filter:{rsvp:'yes'}).length }}</div>
+                                            <div class="rsvps-amount">{{ (party.rsvps | filter:{rsvp:'yes'}).length || "0" }}</div>
                                             <div class="rsvps-title">Yes</div>
                                         </div>
                                         <div class="rsvps-sum">
-                                            <div class="rsvps-amount">{{ (party.rsvps | filter:{rsvp:'maybe'}).length }}</div>
+                                            <div class="rsvps-amount">{{ (party.rsvps | filter:{rsvp:'maybe'}).length || "0" }}</div>
                                             <div class="rsvps-title">Maybe</div>
                                         </div>
                                         <div class="rsvps-sum">
-                                            <div class="rsvps-amount">{{ (party.rsvps | filter:{rsvp:'no'}).length }}</div>
+                                            <div class="rsvps-amount">{{ (party.rsvps | filter:{rsvp:'no'}).length || "0" }}</div>
                                             <div class="rsvps-title">No</div>
                                         </div>
                                         <!--<div ng-repeat="rsvp in party.rsvps | filter:{rsvp:'yes'}">-->
